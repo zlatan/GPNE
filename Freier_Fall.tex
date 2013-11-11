@@ -1,0 +1,134 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[bulgarian]{babel}
+\usepackage{beamerthemesplit}
+\usepackage{amssymb}
+\usecolortheme{crane}
+\useoutertheme{infolines}
+
+\usefonttheme{professionalfonts}
+\usepackage{anttor}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing,patterns}
+\usetikzlibrary{calc,patterns,decorations.markings}
+\usetikzlibrary{positioning}
+
+\include{tab1}
+
+\newcommand{\myfig}[5]{
+\tikzstyle{spring}=[thick,decorate,decoration={aspect=0.5, segment length=#1, amplitude=2mm,coil}]
+\tikzstyle{dampener}=[thick,decoration={markings, mark connection node=dmp, mark=at position 0.5 with
+  {
+    \node (dmp) [thick,inner sep=0pt,transform shape,rotate=-90,minimum width=15pt,minimum height=3pt,draw=none] {};
+    \draw [thick] ($(dmp.north east)+(2pt,0)$) -- (dmp.south east) -- (dmp.south west) -- ($(dmp.north west)+(2pt,0)$);
+    \draw [thick] ($(dmp.north)+(0,-5pt)$) -- ($(dmp.north)+(0,5pt)$);
+  } 
+}, decorate]
+\tikzstyle{platform}=[fill,pattern=north east lines,draw=none,minimum width=2cm,minimum height=0.3cm]
+
+\coordinate (g) at (0,0);
+\coordinate (topspring) at (0,-1.25cm);
+\coordinate (bottomspring) at (0,{#2});
+\coordinate (pt2) at ($(bottomspring) + (0,-.5cm)$); 
+
+\node [platform,anchor=south] at (g)  {};
+\draw[very thick] (-1,0) -- (1,0);
+\draw [dampener](topspring)--(g) node[draw=none,pos=.52,right=0.25cm] {$#5$};
+\draw [spring] (bottomspring) -- (topspring) node[draw=none,pos=.5,right=.25cm] (spring){$k$};
+\draw [thick] (bottomspring) -- (pt2.north);
+\draw ($(pt2) + (0,#3)$) circle (#3) node[draw=none,inner sep = 0,scale=#4]{$m$};
+}
+
+
+
+\title[Свободно падане]{Изследване кинематиката на свободно падане}
+% \institute[]{\large Гимназия с преподаване на немски език "Гьоте" \\ гр. Бургас}
+
+
+\setbeamertemplate{footline}
+{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.9\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\inserttitle                                   
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot} \thepage
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+
+\begin{document}
+
+\everymath{\displaystyle}
+
+\frame{ \thispagestyle{empty} \titlepage}
+
+%
+\frame{
+\frametitle{Експериментални данни}
+
+\begin{minipage}[l]{0.45\textwidth}
+\begin{tabular}{ |p{0.8cm}|p{0.8cm}| }
+  \hline
+  \tiny Време~[s] & \tiny  Разсто-яние~[m]  \\ \hline
+\tiny 0.02 & \tiny 0.00196 \\ \hline 
+\tiny 0.04 & \tiny 0.00784 \\ \hline 
+\tiny 0.06 & \tiny 0.01764 \\ \hline 
+\tiny 0.08 & \tiny 0.03136 \\ \hline 
+\tiny 0.1  & \tiny 0.049 \\ \hline 
+\tiny 0.12 & \tiny 0.07056 \\ \hline 
+\tiny 0.14 & \tiny 0.09604  \\ \hline 
+\tiny 0.16 & \tiny 0.12544 \\ \hline 
+\tiny 0.18 & \tiny 0.15876 \\ \hline 
+\tiny 0.2  & \tiny 0.196 \\ \hline 
+\tiny 0.22 & \tiny 0.23716 \\ \hline 
+\tiny 0.24 & \tiny 0.28224 \\ \hline 
+       ... &  ...        \\ \hline 
+ \end{tabular}
+\end{minipage}
+
+\begin{minipage}[r]{1.25\textwidth}
+\vspace{-7.4cm}
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=50mm]{xt.png}
+ \end{figure}
+\end{minipage}
+ 
+
+}
+%%%%%%%%%%%%%%%%%
+
+
+\frame{ 
+\frametitle{Кинеманика}
+Пресмятане на скоростта:
+
+\begin{equation}
+ \mathrm{ v_2 = \frac{x_3 - x_1}{ t_3 - t_1} }, \quad \mathrm{ v_3 = \frac{x_4 - x_2}{ t_4 - t_2} },\quad  \dots, \mathrm{ v_n = \frac{x_{n+1} - x_{n-1}}{ t_{n+1} - t_{n-1}} }
+\end{equation}
+
+Пресмятане на ускорението:
+
+\begin{equation}
+ \mathrm{ a_2 = \frac{v_3 - v_1}{ t_3 - t_1} }, \quad \mathrm{ a_3 = \frac{v_4 - v_2}{ t_4 - t_2} },\quad  \dots, \mathrm{ a_n = \frac{v_{n+1} - v_{n-1}}{ t_{n+1} - t_{n-1}} }
+\end{equation}
+}
+
+\frame{ 
+\frametitle{Кинеманика}
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=45mm]{vt.png}
+  \includegraphics[height=45mm]{at.png}
+ \end{figure}
+
+}
+
+
+\end{document} 
